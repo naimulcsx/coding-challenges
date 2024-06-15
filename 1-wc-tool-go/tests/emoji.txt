@@ -1,0 +1,6 @@
+This is a sample text file.
+It contains multiple lines.
+
+
+Each line will be counted separately.
+📙
