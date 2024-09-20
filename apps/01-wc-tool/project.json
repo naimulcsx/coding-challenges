@@ -1,0 +1,59 @@
+{
+  "name": "wc-tool",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/01-wc-tool/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/01-wc-tool",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/01-wc-tool/src/main.ts",
+        "tsConfig": "apps/01-wc-tool/tsconfig.app.json",
+        "assets": ["apps/01-wc-tool/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "watch": true,
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "wc-tool:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "wc-tool:build:development"
+        },
+        "production": {
+          "buildTarget": "wc-tool:build:production"
+        }
+      }
+    }
+  }
+}
